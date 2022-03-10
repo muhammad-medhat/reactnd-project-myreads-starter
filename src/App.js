@@ -15,7 +15,10 @@ class BooksApp extends React.Component {
     showSearchPage: false, 
     books: []
   }
-
+  componentDidMount = () =>{
+    BooksAPI.getAll()
+      .then((books)=>this.setState({books}))
+  }
 
   render() {
     return (
@@ -28,7 +31,7 @@ class BooksApp extends React.Component {
               <h1>MyReads</h1>
             </div>
 
-<BooksContent />
+              <BooksContent books={this.state.books} />
 
             <div className="open-search">
               <button onClick={() => this.setState({ showSearchPage: true })}>Add a book</button>
