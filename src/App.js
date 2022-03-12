@@ -7,18 +7,26 @@ import { Route, Routes } from 'react-router-dom'
 
 class BooksApp extends React.Component {
   state = {
-    /**
-     * TODO: Instead of using this state variable to keep track of which page
-     * we're on, use the URL in the browser's address bar. This will ensure that
-     * users can use the browser's back and forward buttons to navigate between
-     * pages, as well as provide a good URL they can bookmark and share.
-     */
-    showSearchPage: false, 
     books: []
   }
   componentDidMount = () =>{
     BooksAPI.getAll()
       .then((books)=>this.setState({books}))
+  }
+  
+  moveto = (bid, sh) => {
+    console.log(`moving book ${bid} to ${sh}`)
+    console.log(this.state.books)
+
+    const books = this.state.books.map( b=> {
+      if(b.id === bid){
+        b.shelf = sh
+      }
+      return b
+    })
+    this.setState({books})
+    //Call the Backend
+
   }
 
   render() {
@@ -26,10 +34,12 @@ class BooksApp extends React.Component {
 
             <>
               <Routes>
-                <Route path='/search' element={<Search /> } />
-                  
-                <Route exact path='/'  element={<BooksContent books={this.state.books} />} />
-
+                    <Route path='/search' element={<Search /> } />
+                      
+                    <Route exact path='/'  element={
+                      <BooksContent 
+                          books={this.state.books}
+                          onMove={this.moveto} />} />
               </Routes>
             </>
     )
