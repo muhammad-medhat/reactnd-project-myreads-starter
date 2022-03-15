@@ -7,6 +7,12 @@ import { Route, Routes } from 'react-router-dom'
 
 class BooksApp extends React.Component {
   state = {
+    searchResults:[], 
+    BookShelvs: [
+        {id:'currentlyReading', name:'Currently Reading' },
+        {id:'wantToRead', name:'Want to Read' },
+        {id:'read', name:'Read'}
+    ], 
     books: []
   }
   componentDidMount = () =>{
@@ -14,32 +20,69 @@ class BooksApp extends React.Component {
       .then((books)=>this.setState({books}))
   }
   
-  moveto = (bid, sh) => {
-    console.log(`moving book ${bid} to ${sh}`)
-    console.log(this.state.books)
+  moveTo = (book, sh) => {
 
-    const books = this.state.books.map( b=> {
-      if(b.id === bid){
-        b.shelf = sh
-      }
-      return b
-    })
-    this.setState({books})
-    //Call the Backend
-
+    if (sh === 'none') {
+      this.setState(prevState => ({
+        books: prevState.books.filter(b => b.id !== book.id)
+      }));
+    } else {
+      book.shelf = sh;
+      this.setState(prevState => ({
+        books: [...prevState.books.filter(b => b.id !== book.id), book]
+      }),this.updateShelfB(book, sh));
+    }
+  }
+  updateShelfB = (book, sh)=>{
+        //Update the Backend
+        BooksAPI.update(book, sh)
   }
 
+  search = (searchTerm) =>{
+    // console.log(searchTerm)
+    if (searchTerm.length > 0) {
+      BooksAPI.search(searchTerm)
+        .then(searchResults =>{
+          // console.log(`searchResults(${searchResults.length})`, searchResults)
+          if(searchResults.length){
+            this.setState({searchResults})          
+          } else {
+            this.setState({searchResults:[]})
+          }
+            return searchResults
+        })
+    }
+  }
+
+  resetSearch = () => {
+    this.setState({ searchResults: [] });
+  };
+
+
   render() {
-    return (
+    const {books, searchResults, BookShelvs} = this.state
+      return (
 
             <>
               <Routes>
-                    <Route path='/search' element={<Search /> } />
+                    <Route path='/search' element={
+                      <Search 
+                        onSearch={this.search}
+                        onResetSearch={this.resetSearch}
+                        onMove={this.moveTo} 
+                        searchResults={searchResults} 
+                        shelves={BookShelvs}
+                        books={books}
+                        />}
+                      />
                       
                     <Route exact path='/'  element={
                       <BooksContent 
-                          books={this.state.books}
-                          onMove={this.moveto} />} />
+                          BookShelvs={BookShelvs}
+                          books={books}
+                          searchResults={searchResults}
+                          onMove={this.moveTo} />} />
+
               </Routes>
             </>
     )

@@ -68,13 +68,13 @@ body, .app {
   font-size: 0;
   outline: 0;
 }
-.open-search button{
+/* .open-search button{
   background-image: url('./icons/add.svg');
 
-}
+}*/
 .open-search a{
-  background-image: url('./icons/mag.svg');
-}
+  background-image: url('./icons/search.svg');
+} 
 
 
 .open-search button:hover {

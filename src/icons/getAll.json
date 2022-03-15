@@ -1,0 +1,39 @@
+{
+    "books": [
+        {
+            "title": "Learning Web Development with React and Bootstrap",
+            "id": "sJf1vQAACAAJ",
+            "shelf": "currentlyReading"
+        },
+        {
+            "title": "The Cuckoo's Calling",   
+            "id": "evuwdDLfAyYC",
+            "shelf": "wantToRead"
+        },
+        {
+            "title": "Needful Things",
+            "id": "jAUODAAAQBAJ",
+            "shelf": "read"
+        },
+        {
+            "title": "React",
+            "id": "IOejDAAAQBAJ",
+            "shelf": "read"
+        },
+        {
+            "title": "Satire TV",
+            "id": "1wy49i-gQjIC",
+            "shelf": "read"
+        },
+        {
+            "title": "The Linux Command Line",
+            "id": "nggnmAEACAAJ",
+            "shelf": "read"
+        },
+        {
+            "title": "Lords of Finance",
+            "id": "74XNzF_al3MC",
+            "shelf": "read"
+        }
+    ]
+}
