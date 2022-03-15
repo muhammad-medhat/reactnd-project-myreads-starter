@@ -11,9 +11,15 @@ class SearchBook extends Component {
 
     changeHandler = (e) =>{
         const val = e.target.value
+
         this.setState({searchTerm: val}, () => {
             this.props.onSearch(val);
         })
+        if(val ===''){
+            this.props.onResetSearch()
+        }           
+        
+
 
     }
     
