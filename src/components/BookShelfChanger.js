@@ -1,3 +1,4 @@
+import propTypes from 'prop-types';
 import React, {Component} from 'react';
 class BookShelfChager extends Component {
     state = { 
@@ -7,6 +8,12 @@ class BookShelfChager extends Component {
         const shelfId = e.target.value
         this.setState(()=>({shelfId}))
         this.props.onMove(this.props.book, shelfId)
+    }
+    static propTypes = {
+        book: propTypes.object.isRequired, 
+        shelves: propTypes.array.isRequired, 
+        onMove: propTypes.func.isRequired, 
+        shelfId: propTypes.string.isRequired
     }
     render() { 
         const {shelves, shelfId} = this.props

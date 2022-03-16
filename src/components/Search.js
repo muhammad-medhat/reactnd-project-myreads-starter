@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Book from './Book';
+import PropTypes from 'prop-types';
+
 
 class SearchBook extends Component {
+
+    static propTypes = {
+        searchResults: PropTypes.array.isRequired, 
+        shelves: PropTypes.array.isRequired, 
+        onMove: PropTypes.func.isRequired
+    }
 
         state = { 
         searchTerm: '', 
@@ -17,30 +25,39 @@ class SearchBook extends Component {
         })
         if(val ===''){
             this.props.onResetSearch()
-        }           
-        
-
-
+        }    
     }
-    
-
-
-
     getShelf = shId => { 
         return this.props.shelves.reduce(sh=>sh.id === shId)
     }
+
+
     preperContent = ()=>{
         {
-            const {searchResults, shelves, onMove} = this.props
-            // console.log('prepareContent')
+            const {searchResults, books, shelves, onMove} = this.props
+            /**
+             * Search results doesnt contain shelf attribute, 
+             * the variable modifiedSearchResults id the modification 
+             * of search results to contain the shelf attribute 
+             * based on the books variable
+             */
 
-            // console.log(this.props)
-            if(searchResults.length) {        
+            const modifiedSearchResults = searchResults.map( new_result =>{
+                books.map( b=> {
+                    if(b.id === new_result.id){
+                        new_result.shelf = b.shelf
+                    }
+                    return b
+                })
+                return new_result
+            })
+            
+            if(modifiedSearchResults.length) {        
                 return(
                     <ol className="books-grid">
 
                         {
-                            searchResults.map( b=>(
+                            modifiedSearchResults.map( b=>(
                                 <li key={b.id}>
                                     <Book 
                                         book={b}
