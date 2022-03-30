@@ -1,17 +1,18 @@
 import React from 'react';
 import ShelfChanger from './BookShelfChanger';
-import propTypes
- from 'prop-types';
+import propTypes from 'prop-types';
 const Book = (props) => {
     const {book, shelves, shelf, onMove} = props
 
     return ( 
         <>
-            <div className="book">
+            <div className="book" onClick={()=>window.location.replace(`books/${book.id}`)}>
                 <div className="book-top">
                     <div 
                         className="book-cover" 
-                        style={{ width: 128, height: 174, backgroundImage: `url('${book.imageLinks? book.imageLinks.smallThumbnail: '../icons/placeholder.svg'}')` }}>
+                        style={{ width: 128, 
+                            height: 174, 
+                            backgroundImage: `url('${book.imageLinks? book.imageLinks.smallThumbnail: '../icons/placeholder.svg'}')` }}>
                     </div>
                     <div className="book-shelf-changer">
                         <ShelfChanger 

@@ -4,6 +4,8 @@ import './App.css'
 import Search from './components/Search'
 import BooksContent from './components/BooksContent'
 import { Route, Routes } from 'react-router-dom'
+import BookProfile from './components/BookProfile'
+// import BookProfileCC from './components/BookProfileCC'
 
 class BooksApp extends React.Component {
   state = {
@@ -82,6 +84,22 @@ class BooksApp extends React.Component {
                           books={books}
                           searchResults={searchResults}
                           onMove={this.moveTo} />} />
+
+                    <Route  path='/books/:id'  element={
+                      <BookProfile 
+                       />
+
+                    } /> 
+                    {/* <Route  path='/books/:id'  element={
+                      <BookProfileCC 
+                        
+                        />} 
+                    /> */}
+       
+       
+       
+       
+       
 
               </Routes>
             </>
